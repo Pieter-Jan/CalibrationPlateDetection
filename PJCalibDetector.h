@@ -22,7 +22,7 @@ class PJCalibDetector
 		vector<Point> OrderCorners(Mat* image, vector<Point> blueRectangle);
 		
 		Mat SetROIFromPolygon(Mat* inputImage, vector<Point> polygon); 
-		vector<vector<Point>> GetCornerROIs(vector<Point> polygon);
+		vector<vector<Point> > GetCornerROIs(vector<Point> polygon);
 
 	private:
 		Mat *image;

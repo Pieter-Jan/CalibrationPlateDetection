@@ -8,10 +8,11 @@ int main()
 	*image = imread("TestImage5.png", 1);
 
 	if(!image->data)
-		throw exception("Unable to open image.");
+		//throw exception("Unable to open image.");
+        return 0;
 
 	PJCalibDetector calibDetector(image);
-
+      
 	try
 	{
 		vector<Point> blueRectangle;

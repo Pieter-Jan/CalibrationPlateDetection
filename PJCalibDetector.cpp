@@ -51,7 +51,7 @@ void PJCalibDetector::FindBlueRectangle(vector<Point> &blueRectangle)
 	vector<Point> intersections = this->GetAllIntersections(Lines);
 
 	/* Organize the intersections in 4 groups */
-	vector<vector<Point>> intersectionGroups(10);
+	vector<vector<Point> > intersectionGroups(10);
 	vector<Point> barryCenters;
 	barryCenters.assign(10, Point(0,0));
 	for(int i=0; i < intersections.size(); i++)
@@ -97,7 +97,7 @@ void PJCalibDetector::FindBlueRectangle(vector<Point> &blueRectangle)
 	/* If one group appears to be empty, bail */
 	if(intersectionGroups[3].size() == 0 || intersectionGroups[2].size() == 0 || intersectionGroups[1].size() == 0 || intersectionGroups[0].size() == 0)
 	{
-		throw exception("Not enough points are detected!");
+		//throw exception("Not enough points are detected!");
 	}
 
 	/* Arrange barry centers */
@@ -182,7 +182,7 @@ vector<Vec4i> PJCalibDetector::SlopeFilter(vector<Vec4i> Lines, double parallel,
 {
 	Vec4i combinedLine;
 	Point p1, p2, p1c, p2c, midPoint;
-	double x1, x2, m1, m2, distance1, distance2, distance3, distance4, x, y, distanceIntersectionMidPoint;
+	double m1, m2, distance1, distance2, distance3, distance4, x, y, distanceIntersectionMidPoint;
 	for(int i=0; i<Lines.size(); i++)
 	{
 		int parallelMatches = 0;
@@ -394,9 +394,9 @@ Mat PJCalibDetector::SetROIFromPolygon(Mat* inputImage, vector<Point> polygon)
 	return imageDest;
 }
 
-vector<vector<Point>> PJCalibDetector::GetCornerROIs(vector<Point> polygon)
+vector<vector<Point> > PJCalibDetector::GetCornerROIs(vector<Point> polygon)
 {
-	vector<vector<Point>> ROIs(4);
+	vector<vector<Point> > ROIs(4);
 
 	/* Create parallellogram in each corner of the plate */
 	int s = 0, t = 0;
@@ -472,8 +472,6 @@ vector<Point> PJCalibDetector::GetLineIntersections(Vec4i line, vector<Vec4i> al
 vector<Point> PJCalibDetector::GetAllIntersections(vector<Vec4i> Lines)
 {
 	/* Calculate the intersections */
-	double m1, m2;
-	double x,y;
 	Point p1, p2, p1c, p2c;
 	vector<Point> intersections;
 	vector<Point> intersectionsTemp;
@@ -545,7 +543,7 @@ vector<Point> PJCalibDetector::OrderCorners(Mat* image, vector<Point> blueRectan
 {
 	Mat imageReduced;
 
-	vector<vector<Point>> ROIs;
+	vector<vector<Point> > ROIs;
 	ROIs = this->GetCornerROIs(blueRectangle);
 
 	/* Find the green cross */
@@ -570,7 +568,7 @@ bool PJCalibDetector::FindGreenCross(vector<Point> ROI)
 
 	double ROIarea = contourArea(ROI);
 	RotatedRect rotatedRect;
-	vector<vector<Point>> contours;
+	vector<vector<Point> > contours;
 	double area, boxedArea, boxRatio, ROIratio, whRatio;
 	vector<Point> greenCross;
 	Mat superBlur;
@@ -622,7 +620,7 @@ bool PJCalibDetector::FindRedSquare(vector<Point> ROI)
 	Mat imageReduced = this->SetROIFromPolygon(this->redImage, ROI);
 	threshold(imageReduced, imageReduced, 40, 255, 1); 
 	
-	vector<vector<Point>> contours;
+	vector<vector<Point> > contours;
 	findContours(imageReduced, contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);	
 
 	// TO DO
