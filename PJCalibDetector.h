@@ -14,7 +14,7 @@
 using namespace std;
 using namespace cv;
 
-class PJCalibDetector
+class PJCalibDetector   // LOl
 {
 	public:
 		PJCalibDetector(Mat* image);
