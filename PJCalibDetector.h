@@ -8,6 +8,9 @@
 #include "cxcore.h"
 #include "highgui.h"
 
+#include "XnOS.h"
+#include "XnCppWrapper.h"
+
 #include <cmath>
 #include <vector>
 
